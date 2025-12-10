@@ -3,12 +3,14 @@ from pathlib import Path
 
 from nove_error import report_error
 from nove_lexer import Lexer
+from nove_parser import Parser
 
 def usage(program: str = None):
     print(f"Usage: {program or sys.argv[0]} <subcommand>")
     print("Subcommands:")
-    print("    help              Prints usage and exits")
-    print("    lex <filepath>    Lexes source, produces and prints tokens")
+    print("    help                Prints usage and exits")
+    print("    lex   <filepath>    Lexes source, produces and prints tokens")
+    print("    parse <filepath>    Parses source, produces and prints operands")
     print()
 
 def main():
@@ -23,7 +25,7 @@ def main():
             usage()
             return
 
-        case "lex":
+        case "lex" | "parse":
             if len(sys.argv) < 3:
                 report_error(f"Expected <filepath> for `{subcommand}` subcommand")
 
@@ -35,6 +37,15 @@ def main():
             if subcommand == "lex":
                 for token in tokens:
                     print(token)
+                return
+
+            parser = Parser(tokens)
+            ops = parser.parse()
+            if len(ops) <= 0: return
+
+            if subcommand == "parse":
+                for i, op in enumerate(ops):
+                    print(f"{i}: {op}")
                 return
 
         case _:
