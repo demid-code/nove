@@ -1,7 +1,4 @@
 // nove comment
 
-// bools like true and false
-// add type conversions later, like 10 $bool or true $int, also idk which symbol to pick for it
-
 10 11 + dump
 10.5 0.25 + dump
