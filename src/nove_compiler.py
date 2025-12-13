@@ -39,6 +39,9 @@ class Compiler:
             case OpType.PUSH_INT:
                 self.writeln(f"stack_push(&stack, VAL_INT({op.operand}));", 2)
 
+            case OpType.PUSH_FLOAT:
+                self.writeln(f"stack_push(&stack, VAL_FLOAT({op.operand}));", 2)
+
             case OpType.PLUS:
                 self.writeln("Value b = stack_pop(&stack);", 2)
                 self.writeln("Value a = stack_pop(&stack);", 2)
@@ -52,8 +55,8 @@ class Compiler:
                 self.writeln("stack_free(&stack);", 2)
                 self.writeln("return 0;", 2)
 
-        #     case _:
-        #         assert False, f"Unsupported OpType.{op.type.name} in Compiler.scan_op()"
+            case _:
+                assert False, f"Unsupported OpType.{op.type.name} in Compiler.scan_op()"
 
         if write_goto:
             self.writeln(f"goto addr_{op_idx + 1};", 2)

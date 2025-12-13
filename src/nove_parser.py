@@ -7,6 +7,7 @@ from nove_lexer import TokenType, Token
 class OpType(IntEnum):
     # Push
     PUSH_INT = auto()
+    PUSH_FLOAT = auto()
 
     # Built-ins
     PLUS = auto()
@@ -54,6 +55,9 @@ class Parser:
         match token.type:
             case TokenType.INT:
                 self.add_op(OpType.PUSH_INT, int(token.text), token)
+
+            case TokenType.FLOAT:
+                self.add_op(OpType.PUSH_FLOAT, float(token.text), token)
 
             case TokenType.WORD:
                 if token.text in WORD_TO_OPTYPE:

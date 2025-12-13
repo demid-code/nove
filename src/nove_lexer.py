@@ -8,6 +8,7 @@ from nove_utils import read_file
 class TokenType(IntEnum):
     WORD = auto()
     INT = auto()
+    FLOAT = auto()
 
 @dataclass
 class Token:
@@ -70,13 +71,19 @@ class Lexer:
         self.add_token(TokenType.WORD)
 
     def make_number(self):
+        is_float = False
+
         while not self.is_at_end() and self.peek().isdigit():
             self.advance()
 
         if self.peek() == "." and self.peek(1).isdigit():
-            report_error(f"Floats are not supported yet", self.get_loc())
+            is_float = True
+            self.advance()
+            
+            while not self.is_at_end() and self.peek().isdigit():
+                self.advance()
 
-        self.add_token(TokenType.INT)
+        self.add_token(TokenType.FLOAT if is_float else TokenType.INT)
 
     def skip_comment(self):
         if self.match("/"):

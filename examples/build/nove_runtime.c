@@ -11,6 +11,16 @@
 void value_dump(Value v) {
     if (IS_INT(v))
         printf("%" PRId64 "\n", AS_INT(v));
+    if (IS_FLOAT(v))
+        printf("%g\n", AS_FLOAT(v));
+    if (IS_BOOL(v)) {
+        if (AS_BOOL(v))
+            printf("true\n");
+        else
+            printf("false\n");
+    }
+    if (IS_PTR(v))
+        printf("%p\n", AS_PTR(v));
 }
 
 Value value_add(Value a, Value b) {
