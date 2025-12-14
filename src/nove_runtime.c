@@ -25,7 +25,19 @@ void value_dump(Value v) {
 
 Value value_add(Value a, Value b) {
     if (a.type != b.type) {
-        error("Type mismatch in value_add\n");
+        if (IS_INT(a) && IS_FLOAT(b))
+            return VAL_FLOAT((double)AS_INT(a) + AS_FLOAT(b));
+
+        if (IS_FLOAT(a) && IS_INT(b))
+            return VAL_FLOAT(AS_FLOAT(a) + (double)AS_INT(b));
+        
+        if (IS_PTR(a) && IS_INT(b))
+            return VAL_PTR((uint8_t*)AS_PTR(a) + AS_INT(b));
+
+        if (IS_INT(a) && IS_PTR(b))
+            return VAL_PTR((uint8_t*)AS_PTR(b) + AS_INT(a));
+
+        error("Type mismatch in value_add");
     }
 
     switch (a.type) {
@@ -34,10 +46,93 @@ Value value_add(Value a, Value b) {
     case TYPE_FLOAT:
         return VAL_FLOAT(AS_FLOAT(a) + AS_FLOAT(b));
     case TYPE_BOOL:
-        error("Cannot add bools\n");
+        error("Cannot add bools");
     case TYPE_PTR:
-        error("Cannot add pointers\n");
+        error("Cannot add pointers");
     }
+
+    error("Unreachable in value_add");
+}
+
+Value value_sub(Value a, Value b) {
+    if (a.type != b.type) {
+        if (IS_INT(a) && IS_FLOAT(b))
+            return VAL_FLOAT((double)AS_INT(a) - AS_FLOAT(b));
+
+        if (IS_FLOAT(a) && IS_INT(b))
+            return VAL_FLOAT(AS_FLOAT(a) - (double)AS_INT(b));
+        
+        if (IS_PTR(a) && IS_INT(b))
+            return VAL_PTR((uint8_t*)AS_PTR(a) - AS_INT(b));
+
+        if (IS_INT(a) && IS_PTR(b))
+            return VAL_PTR((uint8_t*)AS_PTR(b) - AS_INT(a));
+
+        error("Type mismatch in value_sub");
+    }
+
+    switch (a.type) {
+    case TYPE_INT:
+        return VAL_INT(AS_INT(a) - AS_INT(b));
+    case TYPE_FLOAT:
+        return VAL_FLOAT(AS_FLOAT(a) - AS_FLOAT(b));
+    case TYPE_BOOL:
+        error("Cannot subtract bools");
+    case TYPE_PTR:
+        error("Cannot subtract pointers");
+    }
+
+    error("Unreachable in value_sub");
+}
+
+Value value_mul(Value a, Value b) {
+    if (a.type != b.type) {
+        if (IS_INT(a) && IS_FLOAT(b))
+            return VAL_FLOAT((double)AS_INT(a) * AS_FLOAT(b));
+
+        if (IS_FLOAT(a) && IS_INT(b))
+            return VAL_FLOAT(AS_FLOAT(a) * (double)AS_INT(b));
+
+        error("Type mismatch in value_mul");
+    }
+
+    switch (a.type) {
+    case TYPE_INT:
+        return VAL_INT(AS_INT(a) * AS_INT(b));
+    case TYPE_FLOAT:
+        return VAL_FLOAT(AS_FLOAT(a) * AS_FLOAT(b));
+    case TYPE_BOOL:
+        error("Cannot multiply bools");
+    case TYPE_PTR:
+        error("Cannot multiply pointers");
+    }
+
+    error("Unreachable in value_mul");
+}
+
+Value value_div(Value a, Value b) {
+    if (a.type != b.type) {
+        if (IS_INT(a) && IS_FLOAT(b))
+            return VAL_FLOAT((double)AS_INT(a) / AS_FLOAT(b));
+
+        if (IS_FLOAT(a) && IS_INT(b))
+            return VAL_FLOAT(AS_FLOAT(a) / (double)AS_INT(b));
+
+        error("Type mismatch in value_div");
+    }
+
+    switch (a.type) {
+    case TYPE_INT:
+        return VAL_FLOAT(AS_INT(a) / AS_INT(b));
+    case TYPE_FLOAT:
+        return VAL_FLOAT(AS_FLOAT(a) / AS_FLOAT(b));
+    case TYPE_BOOL:
+        error("Cannot divide bools");
+    case TYPE_PTR:
+        error("Cannot divide pointers");
+    }
+
+    error("Unreachable in value_div");
 }
 
 // STACK
@@ -48,7 +143,7 @@ void stack_init(ValueStack *s) {
     s->data = malloc(sizeof(Value) * s->capacity);
 
     if (!s->data) {
-        error("Failed to allocate memory in stack_init\n");
+        error("Failed to allocate memory in stack_init");
     }
 }
 
@@ -64,7 +159,7 @@ void stack_push(ValueStack *s, Value v) {
         
         Value *new_data = realloc(s->data, sizeof(Value) * new_cap);
         if (!new_data) {
-            error("Failed to reallocate memory in stack_push\n");
+            error("Failed to reallocate memory in stack_push");
         }
 
         s->data = new_data;
@@ -76,7 +171,7 @@ void stack_push(ValueStack *s, Value v) {
 
 Value stack_pop(ValueStack *s) {
     if (s->size <= 0) {
-        error("Stack underflow\n");
+        error("Stack underflow");
     }
     
     return s->data[--s->size];

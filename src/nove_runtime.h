@@ -42,6 +42,9 @@ typedef struct {
 
 void value_dump(Value v);
 Value value_add(Value a, Value b);
+Value value_sub(Value a, Value b);
+Value value_mul(Value a, Value b);
+Value value_div(Value a, Value b);
 
 // STACK
 
