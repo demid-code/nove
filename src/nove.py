@@ -4,6 +4,7 @@ from pathlib import Path
 from nove_error import report_error
 from nove_utils import write_file, cmd_call
 from nove_lexer import Lexer
+from nove_preparser import PreParser
 from nove_parser import Parser
 from nove_compiler import Compiler
 
@@ -50,6 +51,10 @@ def main():
                 for token in tokens:
                     print(token)
                 return
+
+            pre_parser = PreParser(tokens)
+            tokens, _ = pre_parser.pre_parse()
+            if len(tokens) <= 0: return
 
             parser = Parser(tokens)
             ops = parser.parse()

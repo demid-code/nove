@@ -4,7 +4,10 @@
 // add procedures
 // add possibility of including files
 
-10 20  + dump
-120 60 - dump
-60 2   * dump
-480 2  / dump
+macro twothreefour
+    2 3 4
+endmacro
+
+twothreefour + + dump
+twothreefour * * dump
+twothreefour + * dump
