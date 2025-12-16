@@ -1,9 +1,9 @@
 include "std/std.nove"
 
-10 10 != dump
+true  true  and dump
+true  false and dump
+false false and dump
 
-15 10 >= dump
-10 15 >= dump
-
-15 10 <= dump
-10 15 <= dump
+true  true  or dump
+true  false or dump
+false false or dump

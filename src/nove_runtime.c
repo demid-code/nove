@@ -170,9 +170,21 @@ Value value_less(Value a, Value b) {
 }
 
 Value value_not(Value val) {
-    if (!IS_BOOL(val)) error("`not` can be applied only to bools");
+    if (!IS_BOOL(val)) error("`not` can be used only with bools");
 
     return VAL_BOOL(!AS_BOOL(val));
+}
+
+Value value_and(Value a, Value b) {
+    if (!IS_BOOL(a) || !IS_BOOL(b)) error("`and` can be used only with bools");
+
+    return VAL_BOOL(AS_BOOL(a) && AS_BOOL(b));
+}
+
+Value value_or(Value a, Value b) {
+    if (!IS_BOOL(a) || !IS_BOOL(b)) error("`or` can be used only with bools");
+
+    return VAL_BOOL(AS_BOOL(a) || AS_BOOL(b));
 }
 
 Value value_to_int(Value val) {

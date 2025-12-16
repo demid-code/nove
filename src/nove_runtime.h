@@ -50,6 +50,8 @@ Value value_greater(Value a, Value b);
 Value value_less(Value a, Value b);
 
 Value value_not(Value val);
+Value value_and(Value a, Value b);
+Value value_or(Value a, Value b);
 
 // NOTE: i think we shouldn't be able to convert anything on stack to ptr
 // because stack elements dynamically change and pointing to them will be dangerous
