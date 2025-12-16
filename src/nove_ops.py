@@ -9,10 +9,17 @@ class OpType(IntEnum):
     PUSH_FLOAT = auto()
 
     # Built-ins
+    # +, -, *, /
     PLUS = auto()
     MINUS = auto()
     MULTIPLY = auto()
     DIVIDE = auto()
+
+    # Type conversions
+    TO_INT = auto()
+    TO_FLOAT = auto()
+    TO_BOOL = auto()
+
     DUMP = auto()
 
     # Specific
@@ -30,9 +37,16 @@ class Op:
 
 WORD_TO_OPTYPE = {
     # Built-ins
+    # +, -, *, /
     "+":    OpType.PLUS,
     "-":    OpType.MINUS,
     "*":    OpType.MULTIPLY,
     "/":    OpType.DIVIDE,
+
+    # Type conversions
+    "$int":   OpType.TO_INT,
+    "$float": OpType.TO_FLOAT,
+    "$bool": OpType.TO_BOOL,
+
     "dump": OpType.DUMP,
 }

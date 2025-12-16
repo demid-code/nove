@@ -25,10 +25,10 @@ typedef struct {
     } as;
 } Value;
 
-#define VAL_INT(x)   ((Value){ .type = TYPE_INT, .as.i = (x) })
-#define VAL_FLOAT(x) ((Value){ .type = TYPE_FLOAT, .as.f = (x) })
-#define VAL_BOOL(x)  ((Value){ .type = TYPE_BOOL, .as.b = (x) })
-#define VAL_PTR(x)   ((Value){ .type = TYPE_PTR, .as.ptr = (x) })
+#define VAL_INT(x)   ((Value){ .type = TYPE_INT, .as.i = (int64_t)(x) })
+#define VAL_FLOAT(x) ((Value){ .type = TYPE_FLOAT, .as.f = (double)(x) })
+#define VAL_BOOL(x)  ((Value){ .type = TYPE_BOOL, .as.b = (bool)(x) })
+#define VAL_PTR(x)   ((Value){ .type = TYPE_PTR, .as.ptr = (void*)(x) })
 
 #define IS_INT(v)   ((v).type == TYPE_INT)
 #define IS_FLOAT(v) ((v).type == TYPE_FLOAT)
@@ -40,11 +40,18 @@ typedef struct {
 #define AS_BOOL(v)  ((v).as.b)
 #define AS_PTR(v)   ((v).as.ptr)
 
-void value_dump(Value v);
 Value value_add(Value a, Value b);
 Value value_sub(Value a, Value b);
 Value value_mul(Value a, Value b);
 Value value_div(Value a, Value b);
+
+// NOTE: i think we shouldn't be able to convert anything on stack to ptr
+// because stack elements dynamically change and pointing to them will be dangerous
+Value value_to_int(Value val);
+Value value_to_float(Value val);
+Value value_to_bool(Value val);
+
+void value_dump(Value v);
 
 // STACK
 

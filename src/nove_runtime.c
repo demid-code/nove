@@ -8,21 +8,6 @@
 
 // VALUE
 
-void value_dump(Value v) {
-    if (IS_INT(v))
-        printf("%" PRId64 "\n", AS_INT(v));
-    if (IS_FLOAT(v))
-        printf("%g\n", AS_FLOAT(v));
-    if (IS_BOOL(v)) {
-        if (AS_BOOL(v))
-            printf("true\n");
-        else
-            printf("false\n");
-    }
-    if (IS_PTR(v))
-        printf("%p\n", AS_PTR(v));
-}
-
 Value value_add(Value a, Value b) {
     if (a.type != b.type) {
         if (IS_INT(a) && IS_FLOAT(b))
@@ -133,6 +118,65 @@ Value value_div(Value a, Value b) {
     }
 
     error("Unreachable in value_div");
+}
+
+Value value_to_int(Value val) {
+    switch (val.type) {
+    case TYPE_INT:
+        return val;
+    case TYPE_FLOAT:
+        return VAL_INT(AS_FLOAT(val));
+    case TYPE_BOOL:
+        return VAL_INT(AS_BOOL(val));
+    case TYPE_PTR:
+        error("Can't convert pointer to int");
+    }
+}
+
+Value value_to_float(Value val) {
+    switch (val.type) {
+    case TYPE_INT:
+        return VAL_FLOAT(AS_INT(val));
+    case TYPE_FLOAT:
+        return val;
+    case TYPE_BOOL:
+        return VAL_FLOAT(AS_BOOL(val));
+    case TYPE_PTR:
+        error("Can't convert pointer to float");
+    }
+}
+
+Value value_to_bool(Value val) {
+    switch (val.type) {
+    case TYPE_INT:
+        return VAL_BOOL(AS_INT(val));
+    case TYPE_FLOAT:
+        return VAL_BOOL(AS_FLOAT(val));
+    case TYPE_BOOL:
+        return val;
+    case TYPE_PTR:
+        error("Can't convert pointer to bool");
+    }
+}
+
+void value_dump(Value v) {
+    switch (v.type) {
+    case TYPE_INT:
+        printf("%" PRId64 "\n", AS_INT(v));
+        break;
+    case TYPE_FLOAT:
+        printf("%g\n", AS_FLOAT(v));
+        break;
+    case TYPE_BOOL:
+        if (AS_BOOL(v))
+            printf("true\n");
+        else
+            printf("false\n");
+        break;
+    case TYPE_PTR:
+        printf("%p\n", AS_PTR(v));
+        break;
+    }
 }
 
 // STACK

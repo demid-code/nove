@@ -1,4 +1,4 @@
-from nove_error import Loc, report_error
+from nove_error import report_error
 from nove_lexer import TokenType, Token
 from nove_ops import OpType, Op, WORD_TO_OPTYPE
 

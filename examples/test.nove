@@ -1,5 +1,4 @@
-include "../epic_macro.nove"
+include "std/std.nove"
 
-twothreefour + + dump
-twothreefour * * dump
-twothreefour + * dump
+true  dump
+false dump
