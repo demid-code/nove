@@ -10,6 +10,7 @@ class TokenType(IntEnum):
     INT = auto()
     FLOAT = auto()
     STRING = auto()
+    CHAR = auto()
 
 @dataclass
 class Token:
@@ -97,6 +98,20 @@ class Lexer:
 
         self.add_token(TokenType.STRING)
 
+    def make_char(self):
+        while not self.is_at_end() and self.peek() != "'":
+            if self.peek() == "\n":
+                report_error("Chars aren't multiline")
+            self.advance()
+
+        self.advance()
+
+        char = self.source[self.start+1:self.current-1]
+        if len(char.encode("utf-8").decode("unicode_escape")) > 1:
+            report_error("Char should be one character long")
+
+        self.add_token(TokenType.CHAR)
+
     def skip_comment(self):
         if self.match("/"):
             while not self.is_at_end() and self.peek() != "\n":
@@ -114,6 +129,7 @@ class Lexer:
                     self.loc.col = 1
             case "/": self.skip_comment()
             case "\"": self.make_string()
+            case "'": self.make_char()
             case _ if char.isdigit(): self.make_number()
             case _: self.make_word()
 
