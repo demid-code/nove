@@ -20,6 +20,9 @@ class OpType(IntEnum):
     GREATER = auto()
     LESS = auto()
 
+    # Logical
+    NOT = auto()
+
     # Type conversions
     TO_INT = auto()
     TO_FLOAT = auto()
@@ -52,6 +55,9 @@ WORD_TO_OPTYPE = {
     "==": OpType.EQUALS,
     ">":  OpType.GREATER,
     "<":  OpType.LESS,
+
+    # Logical
+    "not": OpType.NOT,
 
     # Type conversions
     "$int":   OpType.TO_INT,

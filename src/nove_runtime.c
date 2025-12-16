@@ -169,6 +169,12 @@ Value value_less(Value a, Value b) {
     }
 }
 
+Value value_not(Value val) {
+    if (!IS_BOOL(val)) error("`not` can be applied only to bools");
+
+    return VAL_BOOL(!AS_BOOL(val));
+}
+
 Value value_to_int(Value val) {
     switch (val.type) {
     case TYPE_INT:
