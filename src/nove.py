@@ -52,7 +52,7 @@ def main():
                     print(token)
                 return
 
-            pre_parser = PreParser(tokens)
+            pre_parser = PreParser(tokens, [nove_path, filepath], [filepath.resolve()])
             tokens, _ = pre_parser.pre_parse()
             if len(tokens) <= 0: return
 

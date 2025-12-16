@@ -1,12 +1,4 @@
-// nove comment
-
-// TODO:
-// add procedures
-// add possibility of including files
-
-macro twothreefour
-    2 3 4
-endmacro
+include "../epic_macro.nove"
 
 twothreefour + + dump
 twothreefour * * dump

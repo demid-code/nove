@@ -9,6 +9,7 @@ class TokenType(IntEnum):
     WORD = auto()
     INT = auto()
     FLOAT = auto()
+    STRING = auto()
 
 @dataclass
 class Token:
@@ -85,6 +86,17 @@ class Lexer:
 
         self.add_token(TokenType.FLOAT if is_float else TokenType.INT)
 
+    def make_string(self):
+        while not self.is_at_end() and self.peek() != "\"":
+            if self.peek() == "\n":
+                self.loc.line += 1
+                self.loc.col = 1
+            self.advance()
+
+        self.advance()
+
+        self.add_token(TokenType.STRING)
+
     def skip_comment(self):
         if self.match("/"):
             while not self.is_at_end() and self.peek() != "\n":
@@ -101,6 +113,7 @@ class Lexer:
                     self.loc.line += 1
                     self.loc.col = 1
             case "/": self.skip_comment()
+            case "\"": self.make_string()
             case _ if char.isdigit(): self.make_number()
             case _: self.make_word()
 
