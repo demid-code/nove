@@ -120,6 +120,55 @@ Value value_div(Value a, Value b) {
     error("Unreachable in value_div");
 }
 
+Value value_equals(Value a, Value b) {
+    if (a.type != b.type) return VAL_BOOL(false);
+
+    switch (a.type) {
+    case TYPE_INT:
+        return VAL_BOOL(AS_INT(a) == AS_INT(b));
+    case TYPE_FLOAT:
+        return VAL_BOOL(AS_FLOAT(a) == AS_FLOAT(b));
+    case TYPE_BOOL:
+        return VAL_BOOL(AS_BOOL(a) == AS_BOOL(b));
+    case TYPE_PTR:
+        return VAL_BOOL(AS_PTR(a) == AS_PTR(b));
+    }
+}
+
+Value value_greater(Value a, Value b) {
+    if (a.type != b.type) {
+        error("Type mismatch in value_greater");
+    }
+
+    switch (a.type) {
+    case TYPE_INT:
+        return VAL_BOOL(AS_INT(a) > AS_INT(b));
+    case TYPE_FLOAT:
+        return VAL_BOOL(AS_FLOAT(a) > AS_FLOAT(b));
+    case TYPE_BOOL:
+        return VAL_BOOL((uint8_t)AS_BOOL(a) > (uint8_t)AS_BOOL(b));
+    case TYPE_PTR:
+        error("Can't compare if pointer is greater than a pointer");
+    }
+}
+
+Value value_less(Value a, Value b) {
+    if (a.type != b.type) {
+        error("Type mismatch in value_less");
+    }
+
+    switch (a.type) {
+    case TYPE_INT:
+        return VAL_BOOL(AS_INT(a) < AS_INT(b));
+    case TYPE_FLOAT:
+        return VAL_BOOL(AS_FLOAT(a) < AS_FLOAT(b));
+    case TYPE_BOOL:
+        return VAL_BOOL((uint8_t)AS_BOOL(a) < (uint8_t)AS_BOOL(b));
+    case TYPE_PTR:
+        error("Can't compare if pointer is less than a pointer");
+    }
+}
+
 Value value_to_int(Value val) {
     switch (val.type) {
     case TYPE_INT:

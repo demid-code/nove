@@ -45,6 +45,10 @@ Value value_sub(Value a, Value b);
 Value value_mul(Value a, Value b);
 Value value_div(Value a, Value b);
 
+Value value_equals(Value a, Value b);
+Value value_greater(Value a, Value b);
+Value value_less(Value a, Value b);
+
 // NOTE: i think we shouldn't be able to convert anything on stack to ptr
 // because stack elements dynamically change and pointing to them will be dangerous
 Value value_to_int(Value val);

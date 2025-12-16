@@ -15,6 +15,11 @@ class OpType(IntEnum):
     MULTIPLY = auto()
     DIVIDE = auto()
 
+    # Comparison
+    EQUALS = auto()
+    GREATER = auto()
+    LESS = auto()
+
     # Type conversions
     TO_INT = auto()
     TO_FLOAT = auto()
@@ -42,6 +47,11 @@ WORD_TO_OPTYPE = {
     "-":    OpType.MINUS,
     "*":    OpType.MULTIPLY,
     "/":    OpType.DIVIDE,
+
+    # Comparison
+    "==": OpType.EQUALS,
+    ">":  OpType.GREATER,
+    "<":  OpType.LESS,
 
     # Type conversions
     "$int":   OpType.TO_INT,

@@ -1,10 +1,9 @@
 include "std/std.nove"
 
-true  dump
-false dump
+10 10 == dump
 
-'H' dump
-'E' dump
-'L' dump
-'L' dump
-'O' dump
+15 10 > dump
+10 15 > dump
+
+15 10 < dump
+10 15 < dump
