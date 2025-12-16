@@ -1,9 +1,12 @@
 include "std/std.nove"
 
-true  true  and dump
-true  false and dump
-false false and dump
+macro test
+    123 dump
+endmacro
 
-true  true  or dump
-true  false or dump
-false false or dump
+macro test2
+    test test
+endmacro
+
+test2
+test2

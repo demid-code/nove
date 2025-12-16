@@ -63,7 +63,7 @@ class PreParser:
         macro_tokens = self.macros[token.text]["tokens"]
 
         self.tokens[token_idx:token_idx + 1] = macro_tokens
-        self.current = token_idx + len(macro_tokens)
+        self.current = token_idx
 
     def include_file(self, include_token: Token, include_idx: int):
         if self.is_at_end():
