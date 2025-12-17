@@ -99,6 +99,9 @@ class Compiler:
             case OpType.TO_BOOL:
                 self.writeln("stack_push(&stack, value_to_bool(stack_pop(&stack)));", 2)
 
+            case OpType.DROP:
+                self.writeln("stack_pop(&stack);", 2)
+
             case OpType.DUMP:
                 self.writeln("value_dump(stack_pop(&stack));", 2)
 

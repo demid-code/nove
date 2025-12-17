@@ -30,6 +30,7 @@ class OpType(IntEnum):
     TO_FLOAT = auto()
     TO_BOOL = auto()
 
+    DROP = auto()
     DUMP = auto()
 
     # Specific
@@ -68,5 +69,6 @@ WORD_TO_OPTYPE = {
     "$float": OpType.TO_FLOAT,
     "$bool": OpType.TO_BOOL,
 
+    "drop": OpType.DROP,
     "dump": OpType.DUMP,
 }
