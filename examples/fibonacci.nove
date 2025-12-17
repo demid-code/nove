@@ -2,8 +2,9 @@ include "std/std.nove"
 
 macro N 15 endmacro
 
-1 2
-0 while dup N < do
+1 2 swap over over dump dump
+
+0 while dup N 2 - < do
     swap rot over +
     dup dump
     rot
