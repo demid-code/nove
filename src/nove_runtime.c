@@ -287,3 +287,20 @@ Value stack_pop(ValueStack *s) {
     
     return s->data[--s->size];
 }
+
+void stack_pick(ValueStack *s) {
+    size_t index;
+
+    Value val_index = stack_pop(s);
+    if (IS_INT(val_index)) {
+        index = (size_t)AS_INT(val_index);
+    } else {
+        error("`pick` can be used only with ints");
+    }
+
+    if (index + 1 > s->size || index < 0) {
+        error("Index out of bounds in stack_pick");
+    }
+
+    stack_push(s, s->data[s->size - index - 1]);
+}

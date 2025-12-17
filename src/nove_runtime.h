@@ -73,3 +73,4 @@ void stack_init(ValueStack *s);
 void stack_free(ValueStack *s);
 void stack_push(ValueStack *s, Value v);
 Value stack_pop(ValueStack *s);
+void stack_pick(ValueStack *s);

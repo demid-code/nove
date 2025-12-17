@@ -1,3 +1,4 @@
 include "std/std.nove"
 
-10 drop
+10 dup + dump
+10 20 over dump dump dump

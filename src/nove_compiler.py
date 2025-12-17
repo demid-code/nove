@@ -105,6 +105,9 @@ class Compiler:
             case OpType.DUMP:
                 self.writeln("value_dump(stack_pop(&stack));", 2)
 
+            case OpType.PICK:
+                self.writeln("stack_pick(&stack);", 2)
+
             case OpType.EOF:
                 write_goto = False
                 self.writeln("stack_free(&stack);", 2)
