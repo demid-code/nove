@@ -7,5 +7,5 @@ Nove - [Concatenative](https://en.wikipedia.org/wiki/Concatenative_programming_l
 Compile and run an example
 
 ```bash
-python3 src/nove.py com examples/test.nove -r
+python3 src/nove.py com examples/fibonacci.nove -r
 ```

@@ -1,0 +1,14 @@
+include "std/std.nove"
+
+macro N 15 endmacro
+
+1 2
+0 while dup N < do
+    swap rot over +
+    dup dump
+    rot
+
+    1 +
+endwhile
+
+drop drop drop
