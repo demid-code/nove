@@ -1,8 +1,7 @@
 include "std/std.nove"
 
-macro N 5 endmacro
-
-1 while dup N 1 + < do
-    dup dump
-    1 +
-endwhile drop
+false if
+    123 dump
+else
+    444 dump
+endif

@@ -1,5 +1,10 @@
 from nove_parser import OpType, Op
 
+# TODO:
+# op DO and IF, does the same thing, basically jumping if condition is false
+# perphaps, make JMP_IF_FALSE op and replace if and do with it
+# also you could replace some of op's with just JUMP op
+
 class Compiler:
     def __init__(self, ops: list[Op]):
         self.ops = ops
@@ -121,6 +126,17 @@ class Compiler:
 
             case OpType.ENDWHILE:
                 self.writeln(f"goto addr_{op.operand};", 2)
+
+            case OpType.IF:
+                self.writeln("Value cond = stack_pop(&stack);", 2)
+                self.writeln("if (!IS_BOOL(cond)) error(\"Condition expected to be bool\");", 2)
+                self.writeln(f"if (!AS_BOOL(cond)) goto addr_{op.operand};", 2)
+
+            case OpType.ELSE:
+                self.writeln(f"goto addr_{op.operand};", 2)
+
+            case OpType.ENDIF:
+                pass
 
             case OpType.EOF:
                 write_goto = False

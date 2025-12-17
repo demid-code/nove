@@ -6,6 +6,11 @@ OPS_TO_LINK = {
     OpType.WHILE,
     OpType.DO,
     OpType.ENDWHILE,
+
+    # if/else
+    OpType.IF,
+    OpType.ELSE,
+    OpType.ENDIF,
 }
 
 class Linker:
@@ -44,6 +49,12 @@ class Linker:
                 case OpType.DO:
                     report_error("`do` was never closed with `endwhile`", op.token.loc)
 
+                case OpType.IF:
+                    report_error("`if` was never closed with `endif` or `else`", op.token.loc)
+
+                case OpType.ELSE:
+                    report_error("`else` was never closed with `endif`", op.token.loc)
+
                 case _:
                     assert False, f"Unsupported OpType.{op.type.name} in Linker.solve_end_stack()"
 
@@ -67,10 +78,34 @@ class Linker:
                     self.top_level_err("endwhile")
 
                     do_op, do_idx = self.pop()
+                    if do_op.type != OpType.DO:
+                        report_error("`endwhile` can only close `do`", op.loc)
 
                     self.ops[op_idx].operand = do_op.operand + 1
                     self.ops[do_idx].operand = op_idx + 1
-                
+
+                case OpType.IF:
+                    self.push(op_idx)
+
+                case OpType.ELSE:
+                    self.top_level_err("else")
+
+                    if_op, if_idx = self.pop()
+                    if if_op.type != OpType.IF:
+                        report_error("`else` can only close `if`", op.loc)
+
+                    self.ops[if_idx].operand = op_idx + 1
+                    self.push(op_idx)
+
+                case OpType.ENDIF:
+                    self.top_level_err("endif")
+
+                    if_op, if_idx = self.pop()
+                    if not if_op.type in (OpType.IF, OpType.ELSE):
+                        report_error("`endif` can only close `if` and `else`", op.loc)
+
+                    self.ops[if_idx].operand = op_idx + 1
+
                 case _:
                     assert False, f"Unsupported OpType.{op.type.name} in Linker.scan_op()"
 

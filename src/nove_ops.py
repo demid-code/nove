@@ -40,6 +40,11 @@ class OpType(IntEnum):
     DO = auto()
     ENDWHILE = auto()
 
+    # if/else
+    IF = auto()
+    ELSE = auto()
+    ENDIF = auto()
+
     # Specific
     EOF = auto()
 
@@ -85,4 +90,9 @@ WORD_TO_OPTYPE = {
     "while":    OpType.WHILE,
     "do":       OpType.DO,
     "endwhile": OpType.ENDWHILE,
+
+    # if/else
+    "if":    OpType.IF,
+    "else":  OpType.ELSE,
+    "endif": OpType.ENDIF,
 }
