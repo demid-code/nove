@@ -1,5 +1,8 @@
 include "std/std.nove"
 
-10 20 swap dump dump
+macro N 5 endmacro
 
-10 20 30 rot dump dump dump
+1 while dup N 1 + < do
+    dup dump
+    1 +
+endwhile drop

@@ -6,6 +6,7 @@ from nove_utils import write_file, cmd_call
 from nove_lexer import Lexer
 from nove_preparser import PreParser
 from nove_parser import Parser
+from nove_linker import Linker
 from nove_compiler import Compiler
 
 def usage(program: str = None):
@@ -58,6 +59,10 @@ def main():
 
             parser = Parser(tokens)
             ops = parser.parse()
+            if len(ops) <= 0: return
+
+            linker = Linker(ops)
+            ops = linker.link()
             if len(ops) <= 0: return
 
             if subcommand == "parse":

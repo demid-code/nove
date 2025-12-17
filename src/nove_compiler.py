@@ -111,6 +111,17 @@ class Compiler:
             case OpType.ROLL:
                 self.writeln("stack_roll(&stack);", 2)
 
+            case OpType.WHILE:
+                pass
+
+            case OpType.DO:
+                self.writeln("Value cond = stack_pop(&stack);", 2)
+                self.writeln("if (!IS_BOOL(cond)) error(\"Condition expected to be bool\");", 2)
+                self.writeln(f"if (!AS_BOOL(cond)) goto addr_{op.operand};", 2)
+
+            case OpType.ENDWHILE:
+                self.writeln(f"goto addr_{op.operand};", 2)
+
             case OpType.EOF:
                 write_goto = False
                 self.writeln("stack_free(&stack);", 2)

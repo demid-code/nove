@@ -6,6 +6,12 @@
 #include <stdint.h>
 #include <inttypes.h>
 
+#define error(msg) \
+    do { \
+        fprintf(stderr, "Error: %s\n", msg); \
+        exit(1); \
+    } while (0)
+
 // VALUE
 
 typedef enum {

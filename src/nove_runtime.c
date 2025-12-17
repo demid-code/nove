@@ -1,11 +1,5 @@
 #include "nove_runtime.h"
 
-#define error(msg) \
-    do { \
-        fprintf(stderr, "Error: %s\n", msg); \
-        exit(1); \
-    } while (0)
-
 // VALUE
 
 Value value_add(Value a, Value b) {

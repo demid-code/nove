@@ -35,6 +35,11 @@ class OpType(IntEnum):
     PICK = auto()
     ROLL = auto()
 
+    # while
+    WHILE = auto()
+    DO = auto()
+    ENDWHILE = auto()
+
     # Specific
     EOF = auto()
 
@@ -75,4 +80,9 @@ WORD_TO_OPTYPE = {
     "dump": OpType.DUMP,
     "pick": OpType.PICK,
     "roll": OpType.ROLL,
+
+    # while
+    "while":    OpType.WHILE,
+    "do":       OpType.DO,
+    "endwhile": OpType.ENDWHILE,
 }
