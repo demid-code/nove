@@ -108,6 +108,9 @@ class Compiler:
             case OpType.PICK:
                 self.writeln("stack_pick(&stack);", 2)
 
+            case OpType.ROLL:
+                self.writeln("stack_roll(&stack);", 2)
+
             case OpType.EOF:
                 write_goto = False
                 self.writeln("stack_free(&stack);", 2)

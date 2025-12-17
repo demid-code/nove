@@ -304,3 +304,27 @@ void stack_pick(ValueStack *s) {
 
     stack_push(s, s->data[s->size - index - 1]);
 }
+
+void stack_roll(ValueStack *s) {
+    size_t index;
+
+    Value val_index = stack_pop(s);
+    if (IS_INT(val_index)) {
+        index = (size_t)AS_INT(val_index);
+    } else {
+        error("`pick` can be used only with ints");
+    }
+
+    if (index + 1 > s->size || index < 0) {
+        error("Index out of bounds in stack_roll");
+    }
+
+    size_t from = s->size - index - 1;
+    Value v = s->data[from];
+
+    for (size_t i = from; i < s->size - 1; i++) {
+        s->data[i] = s->data[i + 1];
+    }
+
+    s->data[s->size - 1] = v;
+}

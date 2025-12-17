@@ -33,6 +33,7 @@ class OpType(IntEnum):
     DROP = auto()
     DUMP = auto()
     PICK = auto()
+    ROLL = auto()
 
     # Specific
     EOF = auto()
@@ -73,4 +74,5 @@ WORD_TO_OPTYPE = {
     "drop": OpType.DROP,
     "dump": OpType.DUMP,
     "pick": OpType.PICK,
+    "roll": OpType.ROLL,
 }
