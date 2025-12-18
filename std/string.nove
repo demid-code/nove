@@ -14,7 +14,7 @@ macro strlen // ptr -> int
     swap drop
 endmacro
 
-macro streq
+macro streq // ptr1 ptr2 -> bool
     over strlen over strlen == if
         dup strlen
         0 while dup 2 pick < do
