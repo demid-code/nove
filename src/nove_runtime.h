@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <inttypes.h>
+#include <string.h>
 
 #define error(msg) \
     do { \

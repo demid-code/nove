@@ -1,3 +1,5 @@
-include "std/std.nove"
+include "std/io.nove"
 
-//
+// STDOUT dump
+
+"Hello from nove!\n" dump dump

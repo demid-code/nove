@@ -32,6 +32,9 @@ class Parser:
             case TokenType.CHAR:
                 self.add_op(OpType.PUSH_INT, int(ord(token.text[1:-1].encode("utf-8").decode("unicode_escape"))), token)
 
+            case TokenType.STRING:
+                self.add_op(OpType.PUSH_STR, token.text, token)
+
             case TokenType.WORD:
                 if token.text in WORD_TO_OPTYPE:
                     self.add_op(WORD_TO_OPTYPE.get(token.text), None, token)

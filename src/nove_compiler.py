@@ -13,6 +13,8 @@ class Compiler:
         self.writes = {"init": "", "main": ""}
         self.write_mode = None
 
+        self.strs = []
+
         self.includes = []
         self.add_include("\"nove_runtime.h\"")
 
@@ -46,6 +48,15 @@ class Compiler:
 
             case OpType.PUSH_FLOAT:
                 self.writeln(f"stack_push(&stack, VAL_FLOAT({op.operand}));", 2)
+
+            case OpType.PUSH_STR:
+                if not op.operand in self.strs: self.strs.append(op.operand)
+                idx = self.strs.index(op.operand)
+
+                true_str = op.operand[1:-1].encode().decode("unicode_escape")
+
+                self.writeln(f"stack_push(&stack, VAL_PTR(strs[{idx}]));", 2)
+                self.writeln(f"stack_push(&stack, VAL_INT({len(true_str)}));", 2)
 
             case OpType.PLUS:
                 self.writeln("Value b = stack_pop(&stack);", 2)
@@ -158,6 +169,10 @@ class Compiler:
         self.write_mode = "init"
         self.writeln("ValueStack stack;", 1)
         self.writeln("stack_init(&stack);\n", 1)
+
+        if len(self.strs) > 0:
+            self.writeln("char *strs[] = {%s};\n" % ", ".join(self.strs), 1)
+
         self.writeln("goto addr_0;\n", 1)
 
         output = ""

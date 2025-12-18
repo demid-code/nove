@@ -7,6 +7,7 @@ class OpType(IntEnum):
     # Push
     PUSH_INT = auto()
     PUSH_FLOAT = auto()
+    PUSH_STR = auto()
 
     # Built-ins
     # +, -, *, /

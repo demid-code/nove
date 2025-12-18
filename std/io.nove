@@ -1,0 +1,5 @@
+include "std/core.nove"
+
+macro STDIN  0 endmacro
+macro STDOUT 1 endmacro
+macro STDERR 2 endmacro
