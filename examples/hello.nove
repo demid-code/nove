@@ -1,0 +1,3 @@
+include "std/io.nove"
+
+"Hello, World!\n" puts

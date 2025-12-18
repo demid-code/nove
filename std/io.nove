@@ -3,3 +3,9 @@ include "std/core.nove"
 macro STDIN  0 endmacro
 macro STDOUT 1 endmacro
 macro STDERR 2 endmacro
+
+// TODO: if write fails, handle it
+macro fwrite write drop endmacro
+
+macro puts  STDOUT rot rot fwrite endmacro
+macro eputs STDERR rot rot fwrite endmacro

@@ -1,5 +1,0 @@
-include "std/io.nove"
-
-// STDOUT dump
-
-"Hello from nove!\n" dump dump

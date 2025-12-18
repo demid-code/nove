@@ -4,8 +4,8 @@ Nove - [Concatenative](https://en.wikipedia.org/wiki/Concatenative_programming_l
 
 ## Quick start
 
-Compile and run an example
+Compile and run a a hello world example
 
 ```bash
-python3 src/nove.py com examples/fibonacci.nove -r
+python3 src/nove.py com examples/hello.nove -r
 ```

@@ -127,6 +127,13 @@ class Compiler:
             case OpType.ROLL:
                 self.writeln("stack_roll(&stack);", 2)
 
+            case OpType.WRITE:
+                self.writeln("Value bufSize = stack_pop(&stack);", 2)
+                self.writeln("Value buf = stack_pop(&stack);", 2)
+                self.writeln("Value fd = stack_pop(&stack);", 2)
+                self.writeln("ssize_t ret = write((int)AS_INT(fd), AS_PTR(buf), (size_t)AS_INT(bufSize));", 2)
+                self.writeln("stack_push(&stack, VAL_INT(ret));", 2)
+
             case OpType.WHILE:
                 pass
 
