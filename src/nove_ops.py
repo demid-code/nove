@@ -39,10 +39,14 @@ class OpType(IntEnum):
     # syscalls
     WRITE = auto()
 
+    # reading from memory
+    READ_CHAR = auto(),
+
     # while
     WHILE = auto()
     DO = auto()
     ENDWHILE = auto()
+    BREAK = auto()
 
     # if/else
     IF = auto()
@@ -93,10 +97,14 @@ WORD_TO_OPTYPE = {
     # syscalls
     "write": OpType.WRITE,
 
+    # reading from memory
+    "@char": OpType.READ_CHAR,
+
     # while
     "while":    OpType.WHILE,
     "do":       OpType.DO,
     "endwhile": OpType.ENDWHILE,
+    "break":    OpType.BREAK,
 
     # if/else
     "if":    OpType.IF,

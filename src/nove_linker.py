@@ -6,6 +6,7 @@ OPS_TO_LINK = {
     OpType.WHILE,
     OpType.DO,
     OpType.ENDWHILE,
+    OpType.BREAK,
 
     # if/else
     OpType.IF,
@@ -19,12 +20,18 @@ class Linker:
         self.current = 0
 
         self.stack = []
+        self.second_stack = []
 
-    def push(self, idx: int):
-        self.stack.append(idx)
+    def push(self, idx: int, second: bool = False):
+        if second:
+            self.second_stack.append(idx)
+        else:
+            self.stack.append(idx)
 
-    def pop(self) -> tuple[Op, int]:
-        idx = self.stack.pop()
+    def pop(self, second: bool = False) -> tuple[Op, int]:
+        idx = None
+        if second: idx = self.second_stack.pop()
+        else: idx = self.stack.pop()
         return (self.ops[idx], idx)
 
     def is_at_end(self) -> bool:
@@ -83,6 +90,27 @@ class Linker:
 
                     self.ops[op_idx].operand = do_op.operand + 1
                     self.ops[do_idx].operand = op_idx + 1
+
+                    for opp_idx in reversed(self.second_stack):
+                        opp = self.ops[opp_idx]
+
+                        if opp.type == OpType.BREAK and opp.operand == do_idx:
+                            self.ops[opp_idx].operand = op_idx + 1
+
+                case OpType.BREAK:
+                    self.top_level_err("break")
+
+                    found = False
+                    for opp_idx in reversed(self.stack):
+                        opp = self.ops[opp_idx]
+
+                        if opp.type == OpType.DO:
+                            self.ops[op_idx].operand = opp_idx
+                            self.push(op_idx, second=True)
+                            found = True
+
+                    if not found:
+                        report_error("`break` can only be used in `while` loop", op.loc)
 
                 case OpType.IF:
                     self.push(op_idx)

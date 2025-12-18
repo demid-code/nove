@@ -56,7 +56,7 @@ class Compiler:
                 true_str = op.operand[1:-1].encode().decode("unicode_escape")
 
                 self.writeln(f"stack_push(&stack, VAL_PTR(strs[{idx}]));", 2)
-                self.writeln(f"stack_push(&stack, VAL_INT({len(true_str)}));", 2)
+                # self.writeln(f"stack_push(&stack, VAL_INT({len(true_str)}));", 2)
 
             case OpType.PLUS:
                 self.writeln("Value b = stack_pop(&stack);", 2)
@@ -134,6 +134,10 @@ class Compiler:
                 self.writeln("ssize_t ret = write((int)AS_INT(fd), AS_PTR(buf), (size_t)AS_INT(bufSize));", 2)
                 self.writeln("stack_push(&stack, VAL_INT(ret));", 2)
 
+            case OpType.READ_CHAR:
+                self.writeln("Value ptr = stack_pop(&stack);", 2)
+                self.writeln("stack_push(&stack, VAL_INT(*(char*)AS_PTR(ptr)));", 2)
+
             case OpType.WHILE:
                 pass
 
@@ -143,6 +147,9 @@ class Compiler:
                 self.writeln(f"if (!AS_BOOL(cond)) goto addr_{op.operand};", 2)
 
             case OpType.ENDWHILE:
+                self.writeln(f"goto addr_{op.operand};", 2)
+
+            case OpType.BREAK:
                 self.writeln(f"goto addr_{op.operand};", 2)
 
             case OpType.IF:

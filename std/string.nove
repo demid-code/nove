@@ -1,0 +1,34 @@
+include "std/core.nove"
+
+// TODO: convert macros to procedures when they are added
+
+macro strlen // ptr -> int
+    0 true while dup do
+        2 pick 2 pick + @char '\0' == if
+            break
+        endif
+
+        swap 1 + swap // increase counter
+    endwhile drop
+
+    swap drop
+endmacro
+
+macro streq
+    over strlen over strlen == if
+        dup strlen
+        0 while dup 2 pick < do
+            3 pick over + @char
+            3 pick 2 pick + @char
+            != if
+                break
+            endif
+
+            1 +
+        endwhile
+
+        swap < not swap drop swap drop
+    else
+        false
+    endif
+endmacro

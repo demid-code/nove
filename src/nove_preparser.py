@@ -96,6 +96,8 @@ class PreParser:
             self.current = include_idx
 
             return
+        
+        report_error(f"`{path_token.text[1:-1]}` path doesn't exist", path_token.loc)
 
     def scan_token(self):
         token, token_idx = self.advance()
